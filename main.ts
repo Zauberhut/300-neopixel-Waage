@@ -50,13 +50,13 @@ input.onButtonPressed(Button.B, function () {
     AnzahlPixel += 1
 })
 function colorshuffle () {
-    randomcolor = randint(1, 6)
+    randomcolor = randint(1, 2)
     if (randomcolor == 1) {
         rot = 200
-        gruen = 0
+        gruen = 240
         blau = 0
     } else if (randomcolor == 2) {
-        rot = 200
+        rot = 0
         gruen = 200
         blau = 0
     } else if (randomcolor == 3) {
@@ -83,28 +83,29 @@ function colorshuffle () {
 }
 let blau = 0
 let gruen = 0
-let randomcolor = 0
 let rot = 0
+let randomcolor = 0
 let Position = 0
 let onoff = 0
 let striplaenge = 0
-striplaenge = 300
+striplaenge = 150
 let strip = neopixel.create(DigitalPin.P0, striplaenge, NeoPixelMode.RGB)
 let range = strip.range(0, 60)
-let AnzahlPixel = 10
+let AnzahlPixel = 3
 onoff = 1
-Position = strip.length() / 2
-rot = 240
+Position = strip.length() - strip.length()
+randomcolor = 1
+let tempo = 1
 basic.forever(function () {
     strip.clear()
-    Position += -1 * Math.map(input.acceleration(Dimension.X), 0, 1023, 0, 3)
+    Position += -1 * tempo
     Position = Math.constrain(Position, 0, striplaenge - AnzahlPixel)
     if (input.isGesture(Gesture.Shake)) {
         colorshuffle()
     }
     AnzahlPixel = Math.constrain(AnzahlPixel, 1, striplaenge)
     for (let Index = 0; Index <= striplaenge; Index++) {
-        strip.setPixelColor(Index, neopixel.rgb(0, 0, 30))
+        strip.setPixelColor(Index, neopixel.rgb(0, 0, 25))
     }
     for (let Index = 0; Index <= AnzahlPixel - 1; Index++) {
         strip.setPixelColor(Index + Position, neopixel.rgb(rot, gruen, blau))
